@@ -41,6 +41,33 @@
       assert.equal(multiply(2.5, 2), 5, '2.5 * 2 = 5');
     });
 
+    QUnit.test('subtract input validation', assert => {
+      const inputA = document.getElementById('a');
+      const inputB = document.getElementById('b');
+      const button = document.getElementById('btn-subtract');
+      const result = document.getElementById('result');
+
+      button.addEventListener('click', () => {
+        calculateAndDisplay(subtract);
+      });
+
+      const cases = [
+        ['', '', 'Please fill both inputs', 'Both inputs empty'],
+        ['', '3', 'Please fill both inputs', 'First input empty'],
+        ['5', '', 'Please fill both inputs', 'Second input empty'],
+        ['5', '3', '2', 'Valid subtraction'],
+        ['0', '3', '-3', 'Zero is a valid input']
+      ];
+
+      cases.forEach(([a, b, expected, message]) => {
+        inputA.value = a;
+        inputB.value = b;
+        button.click();
+
+        assert.equal(result.textContent, expected, message);
+      });
+    });
+
   </script>
 </body>
 
